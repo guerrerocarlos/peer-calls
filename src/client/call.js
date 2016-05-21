@@ -4,7 +4,6 @@ const dispatcher = require('./dispatcher/dispatcher.js');
 const getUserMedia = require('./browser/getUserMedia.js');
 const play = require('./browser/video.js').play;
 const notify = require('./action/notify.js');
-const handshake = require('./peer/handshake.js');
 const socket = require('./socket.js');
 
 dispatcher.register(action => {
@@ -12,12 +11,13 @@ dispatcher.register(action => {
 });
 
 function init() {
-  const callId = window.document.getElementById('callId').value;
-
   Promise.all([connect(), getCameraStream()])
   .spread((_socket, stream) => {
-    debug('initializing peer connection');
-    handshake.init(_socket, callId, stream);
+    dispatcher.dispatch({
+      socket: _socket,
+      stream: stream,
+      type: 'connected'
+    });
   });
 }
 
@@ -28,6 +28,14 @@ function connect() {
       debug('socket connected');
       resolve(socket);
     });
+    socket.on('authentication-failed', () => {
+      dispatcher.dispatch({ type: 'authentication-failed' });
+      notify.error('Authentication failed');
+    });
+    socket.once('authenticated', () => {
+      dispatcher.dispatch({ type: 'authenticated' });
+      notify.info('Authenticated');
+    });
     socket.on('disconnect', () => {
       notify.error('Server socket disconnected');
     });
@@ -35,7 +43,12 @@ function connect() {
 }
 
 function getCameraStream() {
-  return getUserMedia({ video: true, audio: true })
+  return getUserMedia({
+    video: {
+      facingMode: 'user'
+    },
+    audio: true
+  })
   .then(stream => {
     debug('got our media stream:', stream);
     dispatcher.dispatch({

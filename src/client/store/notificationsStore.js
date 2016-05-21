@@ -21,6 +21,11 @@ function emitChange() {
   emitter.emit('change');
 }
 
+function notify(notification) {
+  handlers.notify({ notification });
+  emitChange();
+}
+
 const handlers = {
   notify: ({ notification }) => {
     index++;
@@ -61,5 +66,6 @@ module.exports = {
   dispatcherIndex,
   addListener,
   removeListener,
-  getNotifications
+  getNotifications,
+  notify
 };

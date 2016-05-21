@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 'use strict';
+const debug = require('debug')('peer-calls:call');
+const password = require('../password.js');
 const router = require('express').Router();
 const uuid = require('uuid');
 
@@ -10,8 +12,18 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:callId', (req, res) => {
-  res.render('call', {
-    callId: encodeURIComponent(req.params.callId)
+  let callId = req.params.callId;
+  password.isRequired(callId)
+  .then(passwordRequired => {
+    res.render('call', {
+      passwordRequired: passwordRequired,
+      callId: encodeURIComponent(callId)
+    });
+  })
+  .catch(err => {
+    let errorId = uuid.v4();
+    debug('err %s, %s', errorId, err.stack);
+    res.status(500).send('Internal Server Error ' + errorId + ' - sorry :(');
   });
 });
 

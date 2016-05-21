@@ -1,23 +1,24 @@
 jest.unmock('../notify.js');
 
 const dispatcher = require('../../dispatcher/dispatcher.js');
+const notificationsStore = require('../../store/notificationsStore.js');
 const notify = require('../notify.js');
 
 describe('notify', () => {
 
-  beforeEach(() => dispatcher.dispatch.mockClear());
+  beforeEach(() => {
+    dispatcher.dispatch.mockClear();
+    notificationsStore.notify.mockClear();
+  });
 
   describe('info', () => {
 
     it('should dispatch info notification', () => {
       notify.info('test: {0} {1}', 'arg1', 'arg2');
 
-      expect(dispatcher.dispatch.mock.calls).toEqual([[{
-        type: 'notify',
-        notification: {
-          message: 'test: arg1 arg2',
-          type: 'info'
-        }
+      expect(notificationsStore.notify.mock.calls).toEqual([[{
+        message: 'test: arg1 arg2',
+        type: 'info'
       }]]);
     });
 
@@ -28,12 +29,9 @@ describe('notify', () => {
     it('should dispatch warning notification', () => {
       notify.warn('test: {0} {1}', 'arg1', 'arg2');
 
-      expect(dispatcher.dispatch.mock.calls).toEqual([[{
-        type: 'notify',
-        notification: {
-          message: 'test: arg1 arg2',
-          type: 'warning'
-        }
+      expect(notificationsStore.notify.mock.calls).toEqual([[{
+        message: 'test: arg1 arg2',
+        type: 'warning'
       }]]);
     });
 
@@ -44,12 +42,9 @@ describe('notify', () => {
     it('should dispatch error notification', () => {
       notify.error('test: {0} {1}', 'arg1', 'arg2');
 
-      expect(dispatcher.dispatch.mock.calls).toEqual([[{
-        type: 'notify',
-        notification: {
-          message: 'test: arg1 arg2',
-          type: 'error'
-        }
+      expect(notificationsStore.notify.mock.calls).toEqual([[{
+        message: 'test: arg1 arg2',
+        type: 'error'
       }]]);
     });
 

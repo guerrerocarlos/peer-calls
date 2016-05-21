@@ -4,7 +4,7 @@ const debug = require('debug')('peer-calls:peer');
 const notify = require('../action/notify.js');
 const peers = require('./peers.js');
 
-function init(socket, roomName, stream) {
+function init(socket, stream) {
 
   function createPeer(user, initiator) {
     return peers.create({ socket, user, initiator, stream });
@@ -35,9 +35,9 @@ function init(socket, roomName, stream) {
   });
 
   debug('socket.id: %s', socket.id);
-  debug('emit ready for room: %s', roomName);
+  debug('emitting ready');
   notify.info('Ready for connections');
-  socket.emit('ready', roomName);
+  socket.emit('ready');
 }
 
 module.exports = { init };

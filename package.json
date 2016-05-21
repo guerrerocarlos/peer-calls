@@ -13,10 +13,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^0.8.6",
     "bluebird": "^3.3.4",
+    "config": "^1.20.2",
     "express": "^4.13.3",
     "flux": "^2.1.1",
     "jade": "^1.11.0",
+    "mongodb": "^2.1.19",
     "react": "^0.14.8",
     "react-addons-css-transition-group": "^0.14.8",
     "react-dom": "^0.14.8",
@@ -42,8 +45,10 @@
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/bluebird",
       "<rootDir>/node_modules/debug",
       "<rootDir>/node_modules/fbjs",
+      "<rootDir>/node_modules/mongodb",
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-addons-test-utils",
       "<rootDir>/node_modules/react-dom",

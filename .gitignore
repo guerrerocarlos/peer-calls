@@ -2,5 +2,5 @@
 *.swo
 dist/
 node_modules/
-config.js
 coverage/
+config/local*

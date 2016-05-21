@@ -1,4 +1,5 @@
 const dispatcher = require('../dispatcher/dispatcher.js');
+const notificationsStore = require('../store/notificationsStore.js');
 
 function format(string, args) {
   string = args
@@ -9,10 +10,8 @@ function format(string, args) {
 function _notify(type, args) {
   let string = args[0] || '';
   let message = format(string, Array.prototype.slice.call(args, 1));
-  dispatcher.dispatch({
-    type: 'notify',
-    notification: { type, message }
-  });
+
+  notificationsStore.notify({ type, message });
 }
 
 function info() {
