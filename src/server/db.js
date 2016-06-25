@@ -1,7 +1,7 @@
 'use strict';
 const Promise = require('bluebird');
 const config = require('config');
-const mongo = Promise.promisifyAll(require('mongodb'));
+const mongo = require('./promisifiedMongo.js');
 
 let _db;
 

@@ -44,6 +44,7 @@ describe('socket', () => {
     socket.id = '/#socket0';
     socket.join = jest.genMockFunction();
     socket.leave = jest.genMockFunction();
+    password.set.mockClear();
     // let emit = socket.emit;
     // socket.emit = jest.genMockFunction().mockImplementation(function() {
     //   return emit.apply(socket, arguments);
@@ -137,7 +138,46 @@ describe('socket', () => {
       });
     });
 
+    it('authenticates when no password set (nor provided)', done => {
+      socket.on('authenticated', () => {
+        expect(password.set.mock.calls.length).toBe(0);
+        done();
+      });
+
+      socket.emit('authenticate', {
+        callId: 'call4',
+      });
+    });
+
     it('no longer responds to "authenticate" after authenticated');
+
+  });
+
+  describe('join', () => {
+
+    beforeEach(() => handleSocket(socket, io));
+
+    it('emits permission-denied when not authenticated', done => {
+      socket.on('permission-denied', () => done());
+      socket.emit('join');
+    });
+
+    it('emits users to room when authenticated', () => {
+      socket.authenticated = true;
+      socket.room = 'call3';
+      socket.emit('join');
+
+      expect(rooms['call3'].emit.mock.calls.length).toBe(1);
+      expect(rooms['call3'].emit.mock.calls[0][0]).toBe('users');
+      expect(rooms['call3'].emit.mock.calls[0][1].initiator).toBe('/#socket0');
+      expect(rooms['call3'].emit.mock.calls[0][1].users).toEqual([{
+        id: '/#socket0'
+      }, {
+        id: '/#socket1'
+      }, {
+        id: '/#socket2'
+      }]);
+    });
 
   });
 
