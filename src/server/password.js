@@ -1,3 +1,4 @@
+'use strict';
 /**
  * @module server/password
  */
@@ -17,7 +18,7 @@ const SALT_ROUNDS = 10;
 function set(credentials) {
   let oldPassword = credentials.oldPassword || '';
   let callId = credentials.callId;
-  return verify(callId, oldPassword)
+  return verify({ callId, password: oldPassword })
   .then(() => _setPassword(callId, credentials.password));
 }
 
@@ -75,7 +76,7 @@ function _validateCredentials(credentials) {
 function isRequired(callId) {
   return _validateCredentials({ callId })
   .then(() => db.collection('passwords').findOneAsync({ callId }))
-  .then(call => call && call.password);
+  .then(call => !!(call && call.password));
 }
 
-module.exports = { set, isRequired, verify };
+module.exports = { set: set, isRequired, verify };

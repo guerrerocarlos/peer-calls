@@ -7,6 +7,7 @@ const peers = require('./peers.js');
 function init(socket, stream) {
 
   function createPeer(user, initiator) {
+    debug('creating peer, user: %s, initiator: %s', user, initiator);
     return peers.create({ socket, user, initiator, stream });
   }
 
@@ -37,7 +38,7 @@ function init(socket, stream) {
   debug('socket.id: %s', socket.id);
   debug('emitting ready');
   notify.info('Ready for connections');
-  socket.emit('ready');
+  socket.emit('join');
 }
 
 module.exports = { init };

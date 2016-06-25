@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 'use strict';
 const router = require('express').Router();
 

@@ -34,13 +34,9 @@ module.exports = function(socket, io) {
 
       socket.join(callId);
       socket.room = callId;
+      socket.authenticated = true;
 
-      let users = getUsers(callId);
-      debug('ready: %s, room: %s, users: %o', socket.id, callId, users);
-      io.to(callId).emit('users', {
-        initiator: socket.id,
-        users
-      });
+      socket.authenticated = true;
       socket.emit('authenticated');
     })
     .catch(err => {
@@ -51,6 +47,18 @@ module.exports = function(socket, io) {
   }
 
   socket.on('authenticate', authenticate);
+  socket.on('join', () => {
+    if (!socket.authenticated) {
+      debug('join denied socket: %s, room: %s', socket.id, socket.room);
+      return socket.emit('permission-denied', 'join');
+    }
+    let users = getUsers(socket.room);
+    debug('join success socket: %s, room: %s', socket.id, socket.room);
+    return io.to(socket.room).emit('users', {
+      initiator: socket.id,
+      users
+    });
+  });
 
   function getUsers(callId) {
     return _.map(io.sockets.adapter.rooms[callId].sockets, (_, id) => {

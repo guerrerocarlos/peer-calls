@@ -21,4 +21,4 @@ function collection(name) {
   return _db.collection(name);
 }
 
-module.exports = { connect, get, collection };
+module.exports = { connect, get: get, collection };

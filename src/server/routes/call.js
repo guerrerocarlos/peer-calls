@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 'use strict';
 const debug = require('debug')('peer-calls:call');
 const password = require('../password.js');
@@ -16,7 +15,7 @@ router.get('/:callId', (req, res) => {
   password.isRequired(callId)
   .then(passwordRequired => {
     res.render('call', {
-      passwordRequired: passwordRequired,
+      passwordRequired,
       callId: encodeURIComponent(callId)
     });
   })
