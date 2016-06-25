@@ -3,7 +3,7 @@
  * @module server/password
  */
 const Promise = require('bluebird');
-const bcrypt = Promise.promisifyAll(require('bcrypt'));
+const bcrypt = require('./promisifiedBcrypt.js');
 const db = require('./db.js');
 
 const SALT_ROUNDS = 10;
@@ -47,7 +47,7 @@ function verify(credentials) {
     let callId = credentials.callId;
     let password = credentials.password;
 
-    return db.collection('passwords').findOneAsync({ callId: callId })
+    return db.collection('passwords').findOneAsync({ callId })
     .then(call => {
       if (!call || !call.password) return true;
       return bcrypt.compareAsync(password, call.password);
