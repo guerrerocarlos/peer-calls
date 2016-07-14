@@ -11,6 +11,7 @@ const alertStore = require('./store/alertStore.js');
 const call = require('./call.js');
 const debug = require('debug')('peer-calls:index');
 const notificationsStore = require('./store/notificationsStore.js');
+const instructionsStore = require('./store/instructionsStore.js');
 const play = require('./browser/video.js').play;
 const streamStore = require('./store/streamStore.js');
 
@@ -23,6 +24,7 @@ function render() {
 activeStore.addListener(render);
 alertStore.addListener(render);
 notificationsStore.addListener(render);
+instructionsStore.addListener(render);
 streamStore.addListener(render);
 
 render();

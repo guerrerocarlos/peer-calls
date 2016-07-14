@@ -4,6 +4,7 @@ const dispatcher = require('./dispatcher/dispatcher.js');
 const getUserMedia = require('./browser/getUserMedia.js');
 const play = require('./browser/video.js').play;
 const notify = require('./action/notify.js');
+const instruct = require('./action/instruct.js');
 const handshake = require('./peer/handshake.js');
 const socket = require('./socket.js');
 
@@ -24,7 +25,10 @@ function init() {
 function connect() {
   return new Promise(resolve => {
     socket.once('connect', () => {
-      notify.warn('Connected to server socket');
+      const callId = window.document.getElementById('callId').value;
+      
+      instruct.info('Peerscall started');
+      instruct.warn('Please give this site\'s URL to your peers so they can join the call ☝');
       debug('socket connected');
       resolve(socket);
     });

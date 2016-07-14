@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Peer Calls - Video calls to anybody in the world with a private direct connection
+    title Peers Call - Video calls to anybody in the world with a private direct connection
     meta(charset="utf-8")
     meta(name="description" content="Make video calls to anybody in the world with a private connection. Share the conversation by sharing url.")
     meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
@@ -12,12 +12,26 @@ html
     link(rel="stylesheet" type="text/css" href="css/main.css")
 
   body
-    include ./_fork.jade
+    // include ./_fork.jade
 
     div#container
 
-      form#form(method="get" action="call")
+      form#form(method="get" action="call" style="margin-bottom: 100px;")
         h1
-          img(src="res/peer-calls.svg" width="100%" alt="Peer Calls")
-        p Group peer-to-peer calls for everyone. Create a private room. Share the link.
-        input(type="submit" value="New Session")
+          a(href="/call")
+            img(src="res/peer-calls.svg" width="100%" alt="Peers Call")
+        p Free group calls for everyone.
+        input(type="submit" value="Start")
+
+
+      // - div(style="width:160px; margin: 0 auto; ")
+      //-   a(href="https://twitter.com/intent/tweet?screen_name=peerscall_com" class="twitter-mention-button twitter-align-center" data-show-count="false") @peerscall_com
+      //-   script(async src="//platform.twitter.com/widgets.js" charset="utf-8")
+        
+      //- br
+      //- br
+
+
+      div(style="width:30px; margin: 0 auto; ")
+        a(href="http://github.com/guerrerocarlos/peerscall.com")
+          img(src="res/github.svg" width="100%" alt="Peers Call")

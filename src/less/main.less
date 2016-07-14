@@ -9,8 +9,8 @@
 @icon-size: 48px;
 
 @color-primary: white;
-@color-info: #31EF40;
-@color-warning: #F0C808;
+@color-info: #00d500;
+@color-warning: red;
 @color-error: #EE7600;
 
 * {
@@ -190,6 +190,39 @@ body.call {
 
     .notification.warning {
       color: @color-warning;
+      text-shadow: 0 0 0.1rem @color-warning;
+    }
+
+  }
+
+  .instructions {
+    font-family: @font-monospace;
+    font-size: 10px;
+    left: 1rem;
+    position: fixed;
+    right: 1rem;
+    text-align: left;
+    top: 1rem;
+    z-index: 3;
+
+    .instruction {
+      color: @color-primary;
+      text-shadow: 0 0 0.1rem @color-primary;
+    }
+
+    .instruction.info {
+      color: @color-primary;
+      text-shadow: 0 0 0.1rem @color-primary;
+    }
+
+    .instruction.error {
+      color: @color-error;
+      text-shadow: 0 0 0.1rem @color-error;
+    }
+
+    .instruction.warning {
+      color: @color-primary;
+      font-size: 20px;
       text-shadow: 0 0 0.1rem @color-warning;
     }
 

@@ -6,6 +6,7 @@ module.exports = function(socket, io) {
 
   socket.on('signal', payload => {
     // debug('signal: %s, payload: %o', socket.id, payload);
+    debug('signal', payload)
     io.to(payload.userId).emit('signal', {
       userId: socket.id,
       signal: payload.signal
