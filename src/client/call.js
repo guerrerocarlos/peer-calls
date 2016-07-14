@@ -13,6 +13,8 @@ dispatcher.register(action => {
 });
 
 function init() {
+  notify.info('Initializing call');
+  
   const callId = window.document.getElementById('callId').value;
 
   Promise.all([connect(), getCameraStream()])
@@ -28,7 +30,7 @@ function connect() {
       const callId = window.document.getElementById('callId').value;
       
       instruct.info('Peerscall started');
-      instruct.warn('Please give this site\'s URL to your peers so they can join the call ☝');
+      instruct.warn('Please give this URL ☝ to your peers so they can join the call');
       debug('socket connected');
       resolve(socket);
     });
@@ -38,7 +40,7 @@ function connect() {
   });
 }
 
-function getCameraStream() {
+function getCameraStream() {  
   return getUserMedia({ video: true, audio: true })
   .then(stream => {
     debug('got our media stream:', stream);
