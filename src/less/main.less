@@ -10,6 +10,7 @@
 
 @color-primary: white;
 @color-info: #00d500;
+@color-greener: #00df00;
 @color-warning: red;
 @color-error: #EE7600;
 
@@ -83,12 +84,12 @@ body.call {
   }
 
   input:hover {
-    .button(@color-primary, darken(@color-warning, 5%));
+    .button(@color-primary, darken(@color-greener, 5%));
   }
 
   input:active {
     transform: translate(0px, 1px);
-    .button(@color-primary, darken(@color-warning, 10%));
+    .button(@color-primary, darken(@color-info, 10%));
   }
 
   input:active,
