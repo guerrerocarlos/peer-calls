@@ -21,6 +21,7 @@ function init() {
   .spread((_socket, stream) => {
     debug('initializing peer connection');
     handshake.init(_socket, callId, stream);
+    document.getElementsByTagName('body')[0].className='callin'
   });
 }
 
