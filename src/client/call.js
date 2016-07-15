@@ -19,6 +19,7 @@ function init() {
 
   Promise.all([connect(), getCameraStream()])
   .spread((_socket, stream) => {
+    console.log(stream)
     debug('initializing peer connection');
     handshake.init(_socket, callId, stream);
     document.getElementsByTagName('body')[0].className='callin'
@@ -32,8 +33,10 @@ function connect() {
       
       instruct.info('Peerscall started');
       instruct.warn('Please give this URL ☝ to your peers so they can join the call');
+      instruct.warn('https://peerscall.com/call/'+callId);
       debug('socket connected');
       resolve(socket);
+
     });
     socket.on('disconnect', () => {
       notify.error('Server socket disconnected');

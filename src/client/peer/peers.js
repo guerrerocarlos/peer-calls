@@ -22,6 +22,22 @@ function create({ socket, user, initiator, stream }) {
     destroy(user.id);
   }
 
+  debug('>> creating peer: ',{
+    initiator: '/#' + socket.id === initiator,
+    stream,
+    config: {
+      iceServers: [{
+        url: 'stun:23.21.150.121',
+        urls: 'stun:23.21.150.121'
+      }, {
+        url: 'turn:numb.viagenie.ca',
+        urls: 'turn:numb.viagenie.ca',
+        credential: 'muazkh',
+        username: 'webrtc@live.com'
+      }]
+    }
+  })
+
   let peer = peers[user.id] = Peer.init({
     initiator: '/#' + socket.id === initiator,
     stream,

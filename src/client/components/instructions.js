@@ -13,7 +13,6 @@ function instructions(props) {
     );
   });
 
-  console.log(instructionsElements)
   return (
     <div className="instructions">
       <Transition

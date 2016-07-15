@@ -23,7 +23,6 @@ function emitChange() {
 
 const handlers = {
   instruct: ( instruct ) => {
-    console.log(instruct)
     let instruction = instruct.notification
     index++;
     debug('instruct!', instruction.message);

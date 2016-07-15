@@ -5,7 +5,7 @@ const notify = require('../action/notify.js');
 const peers = require('./peers.js');
 
 function init(socket, roomName, stream) {
-
+  debug('socket, roomNAme, stream', socket, roomName, stream)
   function createPeer(user, initiator) {
     return peers.create({ socket, user, initiator, stream });
   }
@@ -13,7 +13,7 @@ function init(socket, roomName, stream) {
   socket.on('signal', payload => {
     let peer = peers.get(payload.userId);
     let signal = payload.signal;
-    // debug('socket signal, userId: %s, signal: %o', payload.userId, signal);
+    debug('socket signal, userId: %s, signal: %o', payload.userId, signal);
 
     if (!peer) return debug('user: %s, no peer found', payload.userId);
     peer.signal(signal);
@@ -21,7 +21,7 @@ function init(socket, roomName, stream) {
 
   socket.on('users', payload => {
     let { initiator, users } = payload;
-    debug('socket users: %o', users);
+    debug('socket users: %o initiator: %o', users, initiator);
     notify.info('Connected users: {0}', users.length);
 
     users
